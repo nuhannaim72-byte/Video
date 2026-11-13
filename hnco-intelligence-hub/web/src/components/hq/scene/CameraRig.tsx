@@ -13,11 +13,8 @@ import type { AgentId } from "@/lib/types";
 // --- Shared input & commands (driven by keyboard, on-screen controls and UI buttons) -----------
 
 export const moveInput = { forward: 0, right: 0, run: false };
-export const rigCommands = {
-  zoom: (_factor: number) => {},
-  rotate: (_radians: number) => {},
-  overview: () => {},
-};
+type RigCommands = { zoom: (factor: number) => void; rotate: (radians: number) => void; overview: () => void };
+export const rigCommands: RigCommands = { zoom: () => {}, rotate: () => {}, overview: () => {} };
 
 const keys = new Set<string>();
 const typing = () => {

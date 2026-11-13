@@ -42,6 +42,8 @@ export type HubState = {
   cameraMode: CameraMode;
   flyTo: FlyTo;
   dashboardOpen: boolean;
+  /** Task shown in the dashboard's detail view. */
+  openTaskId: string | null;
   quality: Quality;
   effectiveQuality: Exclude<Quality, "auto">;
   simSpeed: number;
@@ -81,6 +83,7 @@ export const useHub = create<HubState>((set, get) => ({
   cameraMode: "orbit",
   flyTo: null,
   dashboardOpen: false,
+  openTaskId: null,
   quality: "auto",
   effectiveQuality: "balanced",
   simSpeed: 1,
@@ -129,7 +132,7 @@ export const useHub = create<HubState>((set, get) => ({
 
 // --- Derived selectors -------------------------------------------------------------------------
 
-export const selectPendingApprovals = (s: HubState) =>
+export const selectPendingApprovals = (s: Pick<HubState, "approvals">) =>
   Object.values(s.approvals)
     .filter((a) => a.status === "pending")
     .sort((a, b) => a.createdAt - b.createdAt);

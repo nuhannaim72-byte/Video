@@ -2,7 +2,7 @@
 
 import { AdaptiveEvents, PerformanceMonitor } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect } from "react";
 import * as THREE from "three";
 import { useHub, type HubState } from "@/lib/store";
 import { Agents } from "./Agents";
@@ -27,17 +27,14 @@ function initialTier(): Tier {
 export default function OfficeScene() {
   const quality = useHub((s) => s.quality);
   const effective = useHub((s) => s.effectiveQuality);
-  const [dpr, setDpr] = useState(1.25);
 
   useEffect(() => {
     if (quality === "auto") useHub.getState().set({ effectiveQuality: initialTier() });
     else useHub.getState().set({ effectiveQuality: quality });
   }, [quality]);
 
-  useEffect(() => {
-    const max = typeof window !== "undefined" ? window.devicePixelRatio : 1;
-    setDpr(effective === "high" ? Math.min(max, 2) : effective === "balanced" ? Math.min(max, 1.5) : 1);
-  }, [effective]);
+  const maxDpr = typeof window !== "undefined" ? window.devicePixelRatio : 1;
+  const dpr = effective === "high" ? Math.min(maxDpr, 2) : effective === "balanced" ? Math.min(maxDpr, 1.5) : 1;
 
   const step = (dir: 1 | -1) => {
     const s = useHub.getState();
