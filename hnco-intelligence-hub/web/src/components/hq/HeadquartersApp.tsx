@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useHub } from "@/lib/store";
 import { useHubConnection } from "./useHubConnection";
 import { HudOverlay } from "./ui/HudOverlay";
 
@@ -9,6 +10,11 @@ const OfficeScene = dynamic(() => import("./scene/OfficeScene"), {
   ssr: false,
   loading: () => <div className="absolute inset-0 grid place-items-center text-mist">Preparing the headquarters…</div>,
 });
+
+// Exposed in development so automated checks can drive the camera and read state.
+if (typeof window !== "undefined" && process.env.NODE_ENV !== "production") {
+  (window as unknown as { __hub: typeof useHub }).__hub = useHub;
+}
 
 export default function HeadquartersApp() {
   useHubConnection();

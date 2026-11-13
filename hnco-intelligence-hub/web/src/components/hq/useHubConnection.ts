@@ -18,7 +18,10 @@ export function useHubConnection() {
     let cancelled = false;
 
     (async () => {
-      const forceSim = new URLSearchParams(window.location.search).get("mode") === "simulation";
+      const params = new URLSearchParams(window.location.search);
+      const forceSim = params.get("mode") === "simulation";
+      const q = params.get("quality");
+      if (q === "low" || q === "balanced" || q === "high") set({ quality: q });
       set({ connection: forceSim ? "local" : "connecting" });
       const health = forceSim ? null : await probeBackend();
       if (cancelled) return;

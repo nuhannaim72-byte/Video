@@ -314,12 +314,15 @@ const SKYLINE_FRAG = /* glsl */ `
       vec2 cell = vec2(floor(u / 2.6), floor(vWorld.y / 3.4));
       vec2 f = vec2(fract(u / 2.6), fract(vWorld.y / 3.4));
       float win = step(0.18, f.x) * step(f.x, 0.82) * step(0.25, f.y) * step(f.y, 0.85);
+      // Fade the grid out where a window is smaller than a pixel or two (prevents moiré).
+      float fw = max(fwidth(u / 2.6), fwidth(vWorld.y / 3.4));
+      win *= 1.0 - smoothstep(0.15, 0.45, fw);
       float on = step(0.62, hash(cell + vSeed));
       col = mix(col, col * 0.55 + vec3(0.25, 0.3, 0.38) * 0.4, win * 0.7);
       col += win * on * vec3(1.0, 0.82, 0.55) * 0.35;
     }
     float d = length(vWorld.xz);
-    col = mix(col, uFog, smoothstep(90.0, 420.0, d));
+    col = mix(col, uFog, smoothstep(150.0, 520.0, d));
     gl_FragColor = vec4(col, 1.0);
     #include <colorspace_fragment>
   }
@@ -341,10 +344,10 @@ function Skyline() {
     const r = () => ((rnd = (rnd * 16807) % 2147483647) / 2147483647);
     for (let i = 0; i < n; i++) {
       const a = r() * Math.PI * 2;
-      const dist = 95 + r() * 260;
-      const x = Math.cos(a) * dist * 1.25;
+      const dist = 170 + r() * 300;
+      const x = Math.cos(a) * dist * 1.2;
       const z = Math.sin(a) * dist;
-      const h = 14 + Math.pow(r(), 2.2) * 150 * (dist < 160 ? 0.7 : 1);
+      const h = 12 + Math.pow(r(), 2.4) * 120 * (dist < 260 ? 0.55 : 1);
       const w = 14 + r() * 26;
       const d = 14 + r() * 26;
       mtx.compose(new THREE.Vector3(x, -0.2, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, Math.round(r() * 3) * 0.2, 0)), new THREE.Vector3(w, h, d));
@@ -381,14 +384,15 @@ function Grounds() {
     const leaf = new THREE.MeshStandardMaterial({ color: "#4b6b45", roughness: 0.9 });
     const trunk = new THREE.MeshStandardMaterial({ color: "#5b4636", roughness: 0.9 });
     const spots: [number, number][] = [];
-    for (let x = -50; x <= 50; x += 10) spots.push([x, 27], [x, -27]);
-    for (let z = -17; z <= 17; z += 11) spots.push([-46, z], [46, z]);
+    for (let x = -54; x <= 54; x += 12) spots.push([x, -32]);
+    for (let z = -20; z <= 20; z += 10) spots.push([-52, z], [52, z]);
+    for (const x of [-54, -44, 44, 54]) spots.push([x, 34]);
     const crowns = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 1), leaf, spots.length);
     const trunks = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.12, 0.18, 1, 8), trunk, spots.length);
     const m = new THREE.Matrix4();
     spots.forEach(([x, z], i) => {
-      const s = 2.2 + ((x * 7 + z * 13) % 5) * 0.2;
-      m.compose(new THREE.Vector3(x, 3.4, z), new THREE.Quaternion(), new THREE.Vector3(s, s * 1.15, s));
+      const s = 1.7 + (Math.abs(x * 7 + z * 13) % 5) * 0.15;
+      m.compose(new THREE.Vector3(x, 3.1, z), new THREE.Quaternion(), new THREE.Vector3(s, s * 1.2, s));
       crowns.setMatrixAt(i, m);
       m.compose(new THREE.Vector3(x, 1.0, z), new THREE.Quaternion(), new THREE.Vector3(1, 2.4, 1));
       trunks.setMatrixAt(i, m);

@@ -244,15 +244,15 @@ function wallParts(b: PartBatch, w: Wall) {
   const yaw = Math.atan2(bx - ax, bz - az) - Math.PI / 2; // local x runs along the wall
   b.at((ax + bx) / 2, (az + bz) / 2, yaw);
   const H = WALL_H;
-  const frame = w.kind === "window" ? C.darkFrame : C.darkFrame;
+  const frame = w.kind === "window" ? "#3a3f47" : "#b4b9c0";
   b.box("glass", "#cfdbe6", 0, H / 2, 0, len, H, w.kind === "window" ? 0.03 : 0.02);
-  b.box("metal", frame, 0, 0.03, 0, len, 0.06, 0.07); // floor channel
-  b.box("metal", frame, 0, H - 0.03, 0, len, 0.06, 0.07); // head channel
-  const spacing = w.kind === "window" ? 1.5 : 2.4;
+  b.box("metal", frame, 0, 0.025, 0, len, 0.05, 0.06); // floor channel
+  b.box("metal", frame, 0, H - 0.025, 0, len, 0.05, 0.06); // head channel
+  const spacing = w.kind === "window" ? 3.0 : 4.0;
   const n = Math.max(1, Math.round(len / spacing));
   for (let i = 0; i <= n; i++) {
     const x = -len / 2 + (i * len) / n;
-    b.box("metal", frame, x, H / 2, 0, w.kind === "window" ? 0.06 : 0.04, H, w.kind === "window" ? 0.12 : 0.06);
+    b.box("metal", frame, x, H / 2, 0, w.kind === "window" ? 0.05 : 0.03, H, w.kind === "window" ? 0.1 : 0.05);
   }
   if (w.kind === "glass") {
     // Frosted manifestation band with a champagne-gold pinstripe.

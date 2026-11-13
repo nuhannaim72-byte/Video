@@ -79,7 +79,7 @@ const platinumMaterial = () =>
   new THREE.MeshStandardMaterial({ color: "#f0f2f4", metalness: 0.85, roughness: 0.25, envMapIntensity: 1.2 });
 
 /** Tagline / caption rendered to a small texture. */
-function useTextTexture(lines: { text: string; font: string; color: string; y: number; spacing?: number }[], w = 1024, h = 160) {
+function useTextTexture(lines: { text: string; font: string; color: string; y: number; spacing?: number }[], w = 2048, h = 200) {
   return useMemo(() => {
     const canvas = document.createElement("canvas");
     canvas.width = w;
@@ -104,8 +104,8 @@ export function LogoWall() {
   const geo = useLogoGeometry();
   const mats = useMemo(() => [platinumMaterial(), goldMaterial()], []);
   const tagline = useTextTexture([
-    { text: "INTELLIGENCE BEHIND EVERY TRANSFORMATION.", font: "500 34px 'Helvetica Neue', Helvetica, Arial, sans-serif", color: "#d9dde3", y: 64, spacing: 9 },
-    { text: "HN.CO INTELLIGENCE HUB", font: "500 22px 'Helvetica Neue', Helvetica, Arial, sans-serif", color: "#c4a66a", y: 124, spacing: 12 },
+    { text: "INTELLIGENCE BEHIND EVERY TRANSFORMATION.", font: "500 46px 'Helvetica Neue', Helvetica, Arial, sans-serif", color: "#d9dde3", y: 80, spacing: 10 },
+    { text: "HN.CO INTELLIGENCE HUB", font: "500 28px 'Helvetica Neue', Helvetica, Arial, sans-serif", color: "#c4a66a", y: 158, spacing: 14 },
   ]);
   useEffect(() => () => {
     geo.dispose();
@@ -116,8 +116,8 @@ export function LogoWall() {
     <group>
       {/* Reception feature wall (front face at z ≈ -17.02) */}
       <mesh geometry={geo} material={mats} position={[-30, 1.85, -17.0]} scale={0.95} castShadow raycast={() => null} />
-      <mesh position={[-30, 1.25, -17.015]} raycast={() => null}>
-        <planeGeometry args={[6.4, 1.0]} />
+      <mesh position={[-30, 1.2, -17.015]} raycast={() => null}>
+        <planeGeometry args={[7.6, 0.74]} />
         <meshBasicMaterial map={tagline} transparent toneMapped={false} />
       </mesh>
       {/* Exterior sign on the entrance canopy */}

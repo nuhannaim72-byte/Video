@@ -12,11 +12,11 @@ export type MatKey = "matte" | "satin" | "gloss" | "metal" | "gold" | "flat" | "
 
 export const unitGeometries: Record<GeoKey, THREE.BufferGeometry> = {
   box: new THREE.BoxGeometry(1, 1, 1),
-  rbox: new RoundedBoxGeometry(1, 1, 1, 3, 0.12),
-  cyl: new THREE.CylinderGeometry(0.5, 0.5, 1, 28),
-  sphere: new THREE.SphereGeometry(0.5, 24, 16),
-  icosa: new THREE.IcosahedronGeometry(0.5, 2),
-  cone: new THREE.CylinderGeometry(0.32, 0.5, 1, 28),
+  rbox: new RoundedBoxGeometry(1, 1, 1, 2, 0.12),
+  cyl: new THREE.CylinderGeometry(0.5, 0.5, 1, 18),
+  sphere: new THREE.SphereGeometry(0.5, 16, 12),
+  icosa: new THREE.IcosahedronGeometry(0.5, 1),
+  cone: new THREE.CylinderGeometry(0.32, 0.5, 1, 18),
 };
 
 const std = (p: THREE.MeshStandardMaterialParameters) => new THREE.MeshStandardMaterial({ color: "#ffffff", ...p });

@@ -73,7 +73,7 @@ const EYE = 1.62;
 const ISO_POLAR = Math.atan(Math.SQRT2); // true isometric elevation
 const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
-type Fly = { from: THREE.Vector3; to: THREE.Vector3; fromT: THREE.Vector3; toT: THREE.Vector3; t: number; dur: number } | null;
+type Fly = { from: THREE.Vector3; to: THREE.Vector3; fromT: THREE.Vector3; toT: THREE.Vector3; start: number; dur: number } | null;
 
 function overviewPose(aspect: number) {
   const vfov = THREE.MathUtils.degToRad(42);
@@ -209,7 +209,7 @@ export function CameraRig() {
   function startFly(to: THREE.Vector3, toT: THREE.Vector3, dur: number) {
     const c = controls.current;
     if (!c || !persp.current) return;
-    fly.current = { from: persp.current.position.clone(), to, fromT: c.target.clone(), toT, t: 0, dur };
+    fly.current = { from: persp.current.position.clone(), to, fromT: c.target.clone(), toT, start: performance.now(), dur };
   }
 
   // Intro fly-in from outside the entrance.
@@ -284,12 +284,12 @@ export function CameraRig() {
 
     if (fly.current && c && persp.current) {
       const f = fly.current;
-      f.t = Math.min(1, f.t + dt / f.dur);
-      const k = ease(f.t);
+      const t = Math.min(1, (performance.now() - f.start) / 1000 / f.dur);
+      const k = ease(t);
       persp.current.position.lerpVectors(f.from, f.to, k);
       c.target.lerpVectors(f.fromT, f.toT, k);
       c.update();
-      if (f.t >= 1) fly.current = null;
+      if (t >= 1) fly.current = null;
     }
 
     if ((mode === "first" || mode === "third") && persp.current) {

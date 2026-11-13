@@ -142,7 +142,7 @@ export class FigureRig {
 
     // Torso
     part("torso", this.spine, suit, [0, 0.23, 0], [1.12 * build, 1, 0.66]);
-    part("shirt", this.spine, shirt, [0, 0.4, 0.088], [0.1, 0.15, 0.03], [-0.25, 0, 0]);
+    part("shirt", this.spine, shirt, [0, 0.43, 0.086], [0.06, 0.1, 0.022], [-0.3, 0, 0]);
     part("tie", this.spine, look.tie ? mkColor(look.tie) : suit, [0, 0.31, 0.1], [0.04, 0.22, 0.018], [-0.12, 0, 0], !!look.tie);
     part("pin", this.spine, mkColor("#c4a66a"), [0.085, 0.4, 0.09], [0.022, 0.022, 0.01]);
 

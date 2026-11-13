@@ -1,16 +1,16 @@
 "use client";
 
-import { Html } from "@react-three/drei";
 import { useFrame, type ThreeEvent } from "@react-three/fiber";
 import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
-import { agentById, agents, STATUS_META, type Appearance } from "@/lib/catalog";
+import { agents, STATUS_META, type Appearance } from "@/lib/catalog";
 import { BREAK_SPOTS, floorplan, routeBetween, type RoutePoint, type Spot } from "@/lib/floorplan";
 import { presence } from "@/lib/presence";
 import { useHub } from "@/lib/store";
 import type { AgentId, AgentState } from "@/lib/types";
-import { applyPose, copyPose, dampPose, FigureRig, L, newPose, PARTS, solveArmIK, type PartKey, type Pose } from "./rig";
+import { anchorFor } from "./labels";
+import { applyPose, dampPose, FigureRig, L, newPose, PARTS, solveArmIK, type PartKey, type Pose } from "./rig";
 
 type FigId = AgentId | "concierge" | "visitor";
 
@@ -376,15 +376,11 @@ function useFigures() {
   }, []);
 }
 
-const capsule = (r: number, len: number) => new THREE.CapsuleGeometry(r, len, 6, 16);
+const capsule = (r: number, len: number) => new THREE.CapsuleGeometry(r, len, 4, 12);
 
 export function Agents() {
   const figs = useFigures();
-  const cameraMode = useHub((s) => s.cameraMode);
-  const showLabels = useHub((s) => s.showLabels);
   const agentStates = useHub((s) => s.agents);
-  const selected = useHub((s) => s.selected);
-  const hovered = useHub((s) => s.hovered);
 
   // Instanced meshes, one per body part.
   const { meshes, geos, mats } = useMemo(() => {
@@ -392,9 +388,9 @@ export function Agents() {
       capsuleLimb: capsule(0.07, 0.3),
       capsuleArm: capsule(0.05, 0.2),
       capsuleTorso: capsule(0.15, 0.26),
-      sphere: new THREE.SphereGeometry(0.5, 24, 18),
-      rbox: new RoundedBoxGeometry(1, 1, 1, 3, 0.2),
-      cyl: new THREE.CylinderGeometry(0.5, 0.5, 1, 20),
+      sphere: new THREE.SphereGeometry(0.5, 18, 12),
+      rbox: new RoundedBoxGeometry(1, 1, 1, 2, 0.2),
+      cyl: new THREE.CylinderGeometry(0.5, 0.5, 1, 12),
       icosa: (() => {
         const g = new THREE.IcosahedronGeometry(0.5, 1);
         g.computeVertexNormals();
@@ -451,7 +447,6 @@ export function Agents() {
   const ringRef = useRef<THREE.InstancedMesh>(null!);
   const hitRef = useRef<THREE.InstancedMesh>(null!);
   const selRef = useRef<THREE.Mesh>(null!);
-  const labelRefs = useRef<(THREE.Group | null)[]>([]);
 
   // Initial placement: everyone starts at their desk.
   useEffect(() => {
@@ -617,8 +612,7 @@ export function Agents() {
         ringRef.current?.setMatrixAt(i, m4);
         m4.compose(tmpV2.set(f.x, (f.pose.pelvisY + 0.85) / 2, f.z), IDENTITY_Q, tmpS.set(0.7, f.pose.pelvisY + 0.9, 0.7));
         hitRef.current?.setMatrixAt(i, m4);
-        const lab = labelRefs.current[i];
-        if (lab) lab.position.set(tmpV.x, tmpV.y + 0.62, tmpV.z);
+        anchorFor(f.id).set(tmpV.x, tmpV.y + 0.42, tmpV.z);
       }
     }
     meshes.forEach((m) => (m.instanceMatrix.needsUpdate = true));
@@ -668,7 +662,7 @@ export function Agents() {
         <primitive key={m.name} object={m} />
       ))}
       <instancedMesh ref={ringRef} args={[undefined, undefined, nPick]} frustumCulled={false} raycast={() => null}>
-        <torusGeometry args={[0.13, 0.022, 10, 40]} />
+        <torusGeometry args={[0.11, 0.013, 8, 36]} />
         <meshBasicMaterial toneMapped={false} />
       </instancedMesh>
       <instancedMesh
@@ -685,25 +679,6 @@ export function Agents() {
         <ringGeometry args={[0.42, 0.5, 48, 1, 0, Math.PI * 1.8]} />
         <meshBasicMaterial color="#c4a66a" toneMapped={false} transparent opacity={0.95} />
       </mesh>
-      {cameraMode !== "first" &&
-        figs.slice(0, nPick).map((f, i) => {
-          const id = f.id as AgentId | "concierge";
-          const isAgent = id !== "concierge";
-          const show = showLabels || selected === id || hovered === id;
-          const st = isAgent ? agentStates[id as AgentId] : null;
-          return (
-            <group key={id} ref={(g) => void (labelRefs.current[i] = g)}>
-              {show && (
-                <Html center distanceFactor={13} zIndexRange={[20, 0]} style={{ pointerEvents: "none" }}>
-                  <div className={`agent-tag ${selected === id ? "is-selected" : ""}`}>
-                    <span className="agent-tag__dot" style={{ background: st ? STATUS_META[st.status].color : "#c4a66a" }} />
-                    {isAgent ? agentById[id as AgentId].name.replace(/^HN /, "").replace(/ AI$/, "") : "Concierge"}
-                  </div>
-                </Html>
-              )}
-            </group>
-          );
-        })}
     </group>
   );
 

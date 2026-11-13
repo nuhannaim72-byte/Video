@@ -9,6 +9,7 @@ import { Agents } from "./Agents";
 import { Architecture } from "./Architecture";
 import { Effects, Lighting } from "./Atmosphere";
 import { CameraRig } from "./CameraRig";
+import { LabelProjector } from "./LabelProjector";
 import { LogoWall } from "./Logo";
 import { Screens, Signage } from "./Screens";
 
@@ -52,6 +53,10 @@ export default function OfficeScene() {
       gl={{ antialias: effective !== "high", powerPreference: "high-performance", preserveDrawingBuffer: false }}
       camera={{ fov: 42, near: 0.1, far: 2000 }}
       onPointerMissed={() => useHub.getState().select(null)}
+      onCreated={(state) => {
+        // Exposed in development for performance diagnostics.
+        if (process.env.NODE_ENV !== "production") (window as unknown as { __r3f: unknown }).__r3f = state;
+      }}
       style={{ position: "absolute", inset: 0 }}
     >
       <PerformanceMonitor bounds={() => [38, 58]} flipflops={3} onDecline={() => step(-1)} onIncline={() => step(1)} />
@@ -65,6 +70,7 @@ export default function OfficeScene() {
         <Signage />
         <LogoWall />
         <Agents />
+        <LabelProjector />
       </Suspense>
       <Effects />
     </Canvas>
