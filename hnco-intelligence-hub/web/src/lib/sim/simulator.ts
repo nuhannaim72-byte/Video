@@ -511,7 +511,9 @@ export class LocalSimulator implements HubClient {
   private maybeStartMeeting() {
     if (this.simTime < this.nextMeeting || this.meetingMembers.length) return;
     this.nextMeeting = this.simTime + rand(110, 170);
-    const free = agentIds.filter((id) => this.mode.get(id) === "ambient");
+    const approvalsPending = [...this.approvals.values()].some((a) => a.status === "pending");
+    // The Executive AI stays at its desk (GOLD) while work waits for the Managing Director.
+    const free = agentIds.filter((id) => this.mode.get(id) === "ambient" && !(id === "executive" && approvalsPending));
     if (free.length < 3) return;
     const n = Math.min(free.length, 3 + Math.floor(Math.random() * 3));
     const members = [...free].sort(() => Math.random() - 0.5).slice(0, n);

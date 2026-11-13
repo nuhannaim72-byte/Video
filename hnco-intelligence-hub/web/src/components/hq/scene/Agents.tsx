@@ -500,7 +500,8 @@ export function Agents() {
 
   const clock = useRef(0);
   useFrame((state, rawDt) => {
-    const dt = Math.min(rawDt, 0.05);
+    // Generous clamp: on slow devices people still walk in real time instead of in slow motion.
+    const dt = Math.min(rawDt, 0.2);
     clock.current += dt;
     const t = clock.current;
     const states = useHub.getState().agents;

@@ -44,6 +44,12 @@ body {
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
 }
 
+.panel-solid {
+  background: linear-gradient(180deg, rgb(18 26 42 / 0.985), rgb(10 16 28 / 0.99));
+  border: 1px solid rgb(240 242 244 / 0.08);
+  box-shadow: 0 30px 80px -20px rgb(0 0 0 / 0.8);
+}
+
 .hairline {
   border-color: rgb(240 242 244 / 0.08);
 }

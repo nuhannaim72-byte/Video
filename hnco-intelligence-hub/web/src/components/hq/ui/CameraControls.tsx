@@ -38,7 +38,7 @@ export function CameraModes({ compact = false }: { compact?: boolean }) {
   );
 }
 
-export function ViewControls() {
+export function ViewControls({ compact = false }: { compact?: boolean }) {
   const mode = useHub((s) => s.cameraMode);
   const flyToZone = useHub((s) => s.flyToZone);
   const [full, setFull] = useState(false);
@@ -56,7 +56,7 @@ export function ViewControls() {
   return (
     <div className="pointer-events-auto flex flex-col items-center gap-1.5">
       <div className="panel flex items-center gap-1 rounded-xl px-1.5 py-1">
-        <CameraModes />
+        <CameraModes compact={compact} />
         <div className="mx-1 h-6 w-px bg-white/10" />
         <button className={btn} onClick={() => rigCommands.zoom(0.8)} title="Zoom in" aria-label="Zoom in">
           <ZoomIn size={16} />
@@ -77,7 +77,7 @@ export function ViewControls() {
           title="Return to the Executive Office"
         >
           <Building2 size={15} />
-          <span className="hidden lg:inline">Executive Office</span>
+          {!compact && <span className="hidden lg:inline">Executive Office</span>}
         </button>
         <button className={btn} onClick={toggleFull} title={full ? "Exit fullscreen" : "Fullscreen"} aria-label="Toggle fullscreen">
           {full ? <Minimize size={16} /> : <Expand size={16} />}

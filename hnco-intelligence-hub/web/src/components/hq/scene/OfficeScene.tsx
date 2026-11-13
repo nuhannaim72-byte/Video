@@ -45,7 +45,7 @@ export default function OfficeScene() {
 
   return (
     <Canvas
-      shadows={{ type: THREE.PCFSoftShadowMap }}
+      shadows={{ type: THREE.PCFShadowMap }}
       dpr={dpr}
       gl={{ antialias: effective !== "high", powerPreference: "high-performance", preserveDrawingBuffer: false }}
       camera={{ fov: 42, near: 0.1, far: 2000 }}

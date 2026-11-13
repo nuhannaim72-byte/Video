@@ -50,6 +50,7 @@ function MobileBar() {
 
 export function HudOverlay() {
   const entered = useHub((s) => s.entered);
+  const panelOpen = useHub((s) => s.selected !== null);
   return (
     <div className="pointer-events-none absolute inset-0 z-10">
       <AgentLabels />
@@ -58,8 +59,9 @@ export function HudOverlay() {
           <TopBar />
           <DepartmentNav />
           <Minimap className="absolute bottom-3 left-3 z-20 hidden md:block" />
-          <div className="absolute inset-x-0 bottom-3 z-20 hidden justify-center md:flex">
-            <ViewControls />
+          {/* Centred in the space between the minimap and the employee panel. */}
+          <div className={`absolute bottom-3 left-[276px] z-20 hidden justify-center md:flex ${panelOpen ? "right-[436px]" : "right-3"}`}>
+            <ViewControls compact={panelOpen} />
           </div>
           <AgentPanel />
           <Dashboard />

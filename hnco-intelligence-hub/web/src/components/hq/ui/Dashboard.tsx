@@ -105,7 +105,7 @@ export function Dashboard() {
 
   return (
     <section
-      className="panel pointer-events-auto absolute inset-2 z-40 flex flex-col overflow-hidden rounded-xl md:bottom-3 md:left-3 md:right-3 md:top-[76px]"
+      className="panel-solid pointer-events-auto absolute inset-2 z-40 flex flex-col overflow-hidden rounded-xl md:bottom-3 md:left-3 md:right-3 md:top-[76px]"
       aria-label="Managing Director dashboard"
     >
       <header className="flex items-center gap-3 border-b border-white/[0.07] px-5 py-3.5">
@@ -210,10 +210,12 @@ export function Dashboard() {
                           </span>
                         </div>
                         <div className="mt-1 truncate text-[11px] text-mist">{st?.taskLabel}</div>
-                        <div className="mt-1.5 flex items-center gap-2 text-[10.5px] text-mist">
+                        <div className="mt-1.5 flex items-center gap-2 whitespace-nowrap text-[10.5px] text-mist">
                           <span style={{ color: STATUS_META[st?.status ?? "idle"].color }}>{STATUS_META[st?.status ?? "idle"].label}</span>
                           <span>· {open} open</span>
-                          <span className="ml-auto">{agentById[d.id].kpis[0].label}: {agentById[d.id].kpis[0].value}</span>
+                          <span className="ml-auto truncate">
+                            {agentById[d.id].kpis[0].label} <span className="text-platinum/80">{agentById[d.id].kpis[0].value}</span>
+                          </span>
                         </div>
                       </button>
                     );
