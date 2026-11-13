@@ -33,6 +33,11 @@ body {
   background: rgb(196 166 106 / 0.35);
 }
 
+/* Cormorant's default old-style figures make "12" read as "I2"; use lining figures. */
+.font-display {
+  font-variant-numeric: lining-nums;
+}
+
 /* Glass panels used across the headquarters interface */
 .panel {
   background: linear-gradient(180deg, rgb(20 29 47 / 0.88), rgb(12 18 30 / 0.92));
