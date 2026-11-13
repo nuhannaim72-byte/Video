@@ -27,7 +27,8 @@ class Camel(BaseModel):
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
     def dump(self) -> dict:
-        return self.model_dump(by_alias=True, mode="json")
+        # Omit nulls: the web app treats absent fields as "not set" (e.g. no progress bar).
+        return self.model_dump(by_alias=True, mode="json", exclude_none=True)
 
 
 class Activity(Camel):

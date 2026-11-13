@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "sync:catalog": "node scripts/sync-catalog.mjs",
+    "predev": "node scripts/sync-catalog.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/sync-catalog.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@azure/msal-browser": "^5.29.1",

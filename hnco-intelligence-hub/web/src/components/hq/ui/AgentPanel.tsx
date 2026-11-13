@@ -12,6 +12,7 @@ import { RequestForm } from "./TaskComposer";
 import { notify } from "./Toasts";
 
 type Tab = "overview" | "chat" | "tasks" | "activity";
+const TAB_LABEL: Record<Tab, string> = { overview: "Overview", chat: "Chat", tasks: "Tasks", activity: "Activity" };
 
 export function AgentPanel() {
   const selected = useHub((s) => s.selected);
@@ -80,11 +81,11 @@ function AgentBody({ id }: { id: AgentId }) {
             aria-selected={tab === t}
             onClick={() => setTab(t)}
             className={cx(
-              "relative px-3 py-2.5 text-[12.5px] capitalize transition-colors",
+              "relative px-3 py-2.5 text-[12.5px] transition-colors",
               tab === t ? "text-gold" : "text-platinum/65 hover:text-platinum",
             )}
           >
-            {t}
+            {TAB_LABEL[t]}
             {t === "tasks" && mine.filter((m) => OPEN_TASK.includes(m.status)).length > 0 && (
               <span className="ml-1 rounded-full bg-gold/20 px-1.5 text-[10px] text-gold">{mine.filter((m) => OPEN_TASK.includes(m.status)).length}</span>
             )}
@@ -191,7 +192,9 @@ function Chat({ id }: { id: AgentId }) {
   const [text, setText] = useState("");
   const end = useRef<HTMLDivElement>(null);
   const profile = agentById[id];
-  useEffect(() => end.current?.scrollIntoView({ behavior: "smooth", block: "end" }), [messages.length, typing]);
+  useEffect(() => {
+    end.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [messages.length, typing]);
 
   const send = async () => {
     const t = text.trim();

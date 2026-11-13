@@ -1,0 +1,355 @@
+{
+  "company": {
+    "name": "HN.CO",
+    "platform": "HN.CO Intelligence Hub",
+    "product": "HN.CO Intelligence Hub — Virtual Headquarters",
+    "tagline": "Intelligence Behind Every Transformation.",
+    "description": "A premium boutique consultancy for business intelligence, data analytics and digital transformation."
+  },
+  "concierge": {
+    "id": "concierge",
+    "name": "HN Concierge",
+    "role": "Virtual Receptionist",
+    "description": "The front desk of the central orchestrator. Takes requests from visitors and hands them to HN Executive AI for routing. Not one of the twelve departmental employees."
+  },
+  "departments": [
+    {
+      "id": "executive",
+      "name": "Executive Office",
+      "short": "Executive",
+      "description": "Managing Director's private office, executive intelligence assistant, live company performance dashboard and glass boardroom.",
+      "workstation": "Executive command desk"
+    },
+    {
+      "id": "strategy",
+      "name": "Strategy & Advisory",
+      "short": "Strategy",
+      "description": "Business consultants producing market analysis, research and strategic recommendations for clients.",
+      "workstation": "Research & strategy desk"
+    },
+    {
+      "id": "bizdev",
+      "name": "Business Development",
+      "short": "Business Dev",
+      "description": "Client acquisition, CRM pipeline management and proposal preparation.",
+      "workstation": "Proposal preparation workstation"
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing",
+      "short": "Marketing",
+      "description": "Campaigns, brand management, social media analytics and creative content.",
+      "workstation": "Creative content workstation"
+    },
+    {
+      "id": "project",
+      "name": "Project Management",
+      "short": "Projects",
+      "description": "Project timelines, Kanban boards, Gantt charts and delivery status across client engagements.",
+      "workstation": "PMO control desk"
+    },
+    {
+      "id": "bi",
+      "name": "BI & Analytics",
+      "short": "BI & Analytics",
+      "description": "Power BI dashboards, KPI design, interactive analytics and data visualisation.",
+      "workstation": "Data visualisation workstation"
+    },
+    {
+      "id": "dataeng",
+      "name": "Data Engineering",
+      "short": "Data Eng",
+      "description": "Data pipelines, ETL/ELT, warehouse and lakehouse architecture, data quality.",
+      "workstation": "Data architecture workstation"
+    },
+    {
+      "id": "technology",
+      "name": "Technology & Automation",
+      "short": "Technology",
+      "description": "Digital transformation, workflow automation, integrations, software delivery and system monitoring.",
+      "workstation": "Automation engineering desk"
+    },
+    {
+      "id": "finance",
+      "name": "Finance",
+      "short": "Finance",
+      "description": "Financial planning, reporting, cash-flow and revenue analysis, budget monitoring.",
+      "workstation": "Budget monitoring workstation"
+    },
+    {
+      "id": "hr",
+      "name": "HR & Administration",
+      "short": "HR & Admin",
+      "description": "People operations, onboarding, employee records and office administration.",
+      "workstation": "Administrative workstation"
+    },
+    {
+      "id": "legal",
+      "name": "Legal & Compliance",
+      "short": "Legal",
+      "description": "Legal research, contract review support, regulatory compliance and risk management.",
+      "workstation": "Contract review workstation"
+    },
+    {
+      "id": "clientsuccess",
+      "name": "Client Success",
+      "short": "Client Success",
+      "description": "Client relationship management, support and satisfaction tracking.",
+      "workstation": "Customer support workspace"
+    }
+  ],
+  "agents": [
+    {
+      "id": "executive",
+      "name": "HN Executive AI",
+      "role": "Chief of Staff to the Managing Director",
+      "department": "executive",
+      "summary": "Managing Director's intelligence assistant and the face of the central orchestrator.",
+      "jobDescription": "Receives every request from the Managing Director, decides which departmental agents should handle it, tracks progress, consolidates drafts and presents finished work for review. Owns the approval queue: nothing leaves the company without the Managing Director's sign-off.",
+      "responsibilities": ["Request intake and routing", "Cross-department coordination", "Executive briefings", "Approval queue management"],
+      "keywords": ["executive", "board", "briefing", "brief", "summary", "overview", "priorities", "update me", "status of the company", "agenda"],
+      "projects": [
+        { "name": "Q4 Board Pack", "client": "HN.CO internal", "progress": 64 },
+        { "name": "Transformation Portfolio Oversight", "client": "HN.CO internal", "progress": 41 }
+      ],
+      "kpis": [
+        { "label": "Requests routed", "value": "148" },
+        { "label": "Avg. routing time", "value": "6s" },
+        { "label": "Approvals cleared", "value": "97%" }
+      ],
+      "routine": ["Consolidating departmental updates", "Preparing the Managing Director's daily brief", "Reviewing the approval queue", "Monitoring company performance dashboard"],
+      "appearance": { "suit": "#1a2233", "trousers": "#1a2233", "shirt": "#f5f5f2", "tie": "#c4a66a", "skin": "#c99a7a", "hair": "#2b2522", "hairStyle": "short", "height": 1.02, "build": 1.04 }
+    },
+    {
+      "id": "strategy",
+      "name": "HN Strategy AI",
+      "role": "Principal Strategy Consultant",
+      "department": "strategy",
+      "summary": "Business strategy, market research and consulting recommendations.",
+      "jobDescription": "Frames client problems, researches markets and competitors, builds strategic options and writes recommendation decks. Works closely with BI AI for evidence and Finance AI for business cases.",
+      "responsibilities": ["Market and competitor research", "Strategic options and recommendations", "Operating model design", "Client workshop preparation"],
+      "keywords": ["strategy", "strategic", "market", "competitor", "competitive", "growth", "market entry", "positioning", "swot", "advisory", "research", "benchmark", "operating model", "recommendation"],
+      "projects": [
+        { "name": "Retail Group Growth Strategy", "client": "Client — Retail", "progress": 72 },
+        { "name": "Market Entry Study", "client": "Client — Logistics", "progress": 35 }
+      ],
+      "kpis": [
+        { "label": "Engagements active", "value": "4" },
+        { "label": "Deck quality score", "value": "4.7/5" },
+        { "label": "On-time delivery", "value": "94%" }
+      ],
+      "routine": ["Synthesising competitor research", "Building a market sizing model", "Drafting strategic options", "Preparing a client workshop agenda"],
+      "appearance": { "suit": "#3b4a5f", "trousers": "#2a3443", "shirt": "#ffffff", "tie": null, "skin": "#e6c3a5", "hair": "#6b4a2e", "hairStyle": "long", "height": 0.97, "build": 0.94 }
+    },
+    {
+      "id": "bizdev",
+      "name": "HN Business Development AI",
+      "role": "Business Development Director",
+      "department": "bizdev",
+      "summary": "Sales, client acquisition and proposal preparation.",
+      "jobDescription": "Qualifies leads, maintains the CRM pipeline, prepares proposals and tender responses, and plans account growth. Any outreach to prospects is drafted for approval, never sent automatically.",
+      "responsibilities": ["Lead qualification", "CRM pipeline management", "Proposals and tender responses", "Account growth planning"],
+      "keywords": ["sales", "lead", "leads", "pipeline", "prospect", "proposal", "rfp", "tender", "pitch", "crm", "deal", "acquisition", "new business", "outreach"],
+      "projects": [
+        { "name": "Public Sector Analytics Tender", "client": "Prospect — Government", "progress": 58 },
+        { "name": "Q4 Pipeline Acceleration", "client": "HN.CO internal", "progress": 47 }
+      ],
+      "kpis": [
+        { "label": "Pipeline value", "value": "£2.4m" },
+        { "label": "Win rate", "value": "38%" },
+        { "label": "Proposals in flight", "value": "6" }
+      ],
+      "routine": ["Updating CRM opportunities", "Qualifying inbound leads", "Drafting a proposal executive summary", "Reviewing the client pipeline"],
+      "appearance": { "suit": "#252b36", "trousers": "#252b36", "shirt": "#dfe6ef", "tie": "#52647d", "skin": "#8d5a3b", "hair": "#141414", "hairStyle": "short", "height": 1.04, "build": 1.0 }
+    },
+    {
+      "id": "marketing",
+      "name": "HN Marketing AI",
+      "role": "Head of Marketing & Brand",
+      "department": "marketing",
+      "summary": "Marketing campaigns and brand management.",
+      "jobDescription": "Plans campaigns, writes thought-leadership and social content, tracks channel analytics and protects the HN.CO brand. Publishing anything externally requires approval.",
+      "responsibilities": ["Campaign planning", "Thought-leadership content", "Social media analytics", "Brand governance"],
+      "keywords": ["marketing", "campaign", "brand", "social", "linkedin", "content", "newsletter", "seo", "press", "launch", "audience", "webinar", "blog", "post"],
+      "projects": [
+        { "name": "Data Maturity Index Campaign", "client": "HN.CO internal", "progress": 66 },
+        { "name": "Q4 Thought Leadership Series", "client": "HN.CO internal", "progress": 30 }
+      ],
+      "kpis": [
+        { "label": "Engagement rate", "value": "5.8%" },
+        { "label": "MQLs this month", "value": "84" },
+        { "label": "Content published", "value": "21" }
+      ],
+      "routine": ["Reviewing social analytics", "Drafting a LinkedIn article", "Planning the campaign calendar", "Checking brand guidelines on new assets"],
+      "appearance": { "suit": "#5a5148", "trousers": "#2f2f33", "shirt": "#f0f2f4", "tie": null, "skin": "#f1d2bc", "hair": "#b8925a", "hairStyle": "bun", "height": 0.96, "build": 0.92 }
+    },
+    {
+      "id": "project",
+      "name": "HN Project AI",
+      "role": "Senior Project Manager (PMO)",
+      "department": "project",
+      "summary": "Project management across client engagements.",
+      "jobDescription": "Plans engagements, maintains timelines, Kanban boards and Gantt charts, tracks risks and dependencies, and produces status reports.",
+      "responsibilities": ["Engagement planning", "Timeline and milestone tracking", "RAID log management", "Status reporting"],
+      "keywords": ["project", "timeline", "plan", "schedule", "gantt", "milestone", "kanban", "sprint", "status report", "delivery", "resourcing", "raid", "dependencies", "roadmap"],
+      "projects": [
+        { "name": "ERP Data Migration Programme", "client": "Client — Manufacturing", "progress": 52 },
+        { "name": "BI Rollout Wave 2", "client": "Client — Healthcare", "progress": 77 }
+      ],
+      "kpis": [
+        { "label": "Projects on track", "value": "9/11" },
+        { "label": "Milestones hit", "value": "91%" },
+        { "label": "Open risks", "value": "7" }
+      ],
+      "routine": ["Updating the programme Gantt chart", "Moving Kanban cards", "Reviewing the RAID log", "Preparing a weekly status report"],
+      "appearance": { "suit": "#2c3e50", "trousers": "#1f2a36", "shirt": "#ffffff", "tie": null, "skin": "#b98463", "hair": "#3a2a20", "hairStyle": "curly", "height": 0.99, "build": 0.98 }
+    },
+    {
+      "id": "bi",
+      "name": "HN BI AI",
+      "role": "Lead BI & Analytics Consultant",
+      "department": "bi",
+      "summary": "Business intelligence, dashboards and analytics.",
+      "jobDescription": "Designs KPIs, builds Power BI dashboards and semantic models, runs analyses and explains the insight behind the numbers.",
+      "responsibilities": ["KPI framework design", "Power BI dashboards and models", "Ad-hoc analysis", "Insight storytelling"],
+      "keywords": ["dashboard", "power bi", "powerbi", "analytics", "analysis", "analyse", "analyze", "kpi", "metrics", "insight", "visualisation", "visualization", "trend", "churn", "segmentation"],
+      "projects": [
+        { "name": "Executive KPI Dashboard", "client": "Client — Healthcare", "progress": 81 },
+        { "name": "Customer Churn Analytics", "client": "Client — Telecoms", "progress": 44 }
+      ],
+      "kpis": [
+        { "label": "Dashboards live", "value": "23" },
+        { "label": "Report adoption", "value": "87%" },
+        { "label": "Avg. refresh success", "value": "99.2%" }
+      ],
+      "routine": ["Refining a Power BI semantic model", "Analysing KPI trends", "Building a visualisation", "Validating dashboard measures"],
+      "appearance": { "suit": "#1d2c44", "trousers": "#1d2c44", "shirt": "#e9eef5", "tie": null, "skin": "#d8a988", "hair": "#121212", "hairStyle": "long", "height": 0.95, "build": 0.93 }
+    },
+    {
+      "id": "dataeng",
+      "name": "HN Data Engineering AI",
+      "role": "Lead Data Engineer",
+      "department": "dataeng",
+      "summary": "Data pipelines and data management.",
+      "jobDescription": "Designs and runs ingestion and ETL/ELT pipelines, models the warehouse and lakehouse, and monitors data quality and lineage.",
+      "responsibilities": ["Pipeline design and operation", "Warehouse and lakehouse modelling", "Data quality monitoring", "Data architecture"],
+      "keywords": ["data pipeline", "pipeline", "etl", "elt", "warehouse", "lakehouse", "database", "sql", "schema", "ingestion", "data quality", "migration", "fabric", "synapse", "databricks", "lineage"],
+      "projects": [
+        { "name": "Lakehouse Foundation", "client": "Client — Manufacturing", "progress": 63 },
+        { "name": "Data Quality Framework", "client": "Client — Retail", "progress": 38 }
+      ],
+      "kpis": [
+        { "label": "Pipelines healthy", "value": "41/42" },
+        { "label": "Data freshness", "value": "15 min" },
+        { "label": "Quality checks passing", "value": "98.6%" }
+      ],
+      "routine": ["Monitoring nightly ETL runs", "Optimising a SQL transformation", "Reviewing the data model", "Investigating a data quality rule"],
+      "appearance": { "suit": "#34404f", "trousers": "#262e38", "shirt": "#f4f4f4", "tie": null, "skin": "#f0c8a8", "hair": "#a9733f", "hairStyle": "short", "height": 1.03, "build": 1.02 }
+    },
+    {
+      "id": "technology",
+      "name": "HN Technology AI",
+      "role": "Digital Transformation & Automation Architect",
+      "department": "technology",
+      "summary": "Digital transformation and automation.",
+      "jobDescription": "Designs automated workflows and integrations, oversees software delivery, and monitors the health of client and internal systems.",
+      "responsibilities": ["Workflow automation", "Systems integration", "Software delivery oversight", "System monitoring"],
+      "keywords": ["automation", "automate", "workflow", "power automate", "api", "integration", "software", "system", "cloud", "azure", "rpa", "app", "monitoring", "devops", "transformation"],
+      "projects": [
+        { "name": "Invoice Processing Automation", "client": "Client — Logistics", "progress": 69 },
+        { "name": "Azure Landing Zone", "client": "HN.CO internal", "progress": 55 }
+      ],
+      "kpis": [
+        { "label": "Hours automated / month", "value": "1,240" },
+        { "label": "System uptime", "value": "99.95%" },
+        { "label": "Deployments this month", "value": "18" }
+      ],
+      "routine": ["Designing an automation workflow", "Reviewing a pull request", "Checking system monitoring alerts", "Mapping an API integration"],
+      "appearance": { "suit": "#2a2d34", "trousers": "#1c1e23", "shirt": "#d9dee6", "tie": null, "skin": "#6e4630", "hair": "#0f0f0f", "hairStyle": "bald", "height": 1.05, "build": 1.05 }
+    },
+    {
+      "id": "finance",
+      "name": "HN Finance AI",
+      "role": "Financial Planning & Reporting Lead",
+      "department": "finance",
+      "summary": "Financial planning and reporting.",
+      "jobDescription": "Prepares management accounts and financial performance reports, forecasts cash-flow and revenue, and monitors budgets against plan using authorised company data only.",
+      "responsibilities": ["Management reporting", "Cash-flow and revenue forecasting", "Budget monitoring", "Business case modelling"],
+      "keywords": ["finance", "financial", "revenue", "cash", "cashflow", "cash-flow", "budget", "forecast", "p&l", "profit", "margin", "invoice", "cost", "pricing", "performance report", "accounts"],
+      "projects": [
+        { "name": "FY Budget Reforecast", "client": "HN.CO internal", "progress": 48 },
+        { "name": "Pricing Model Review", "client": "HN.CO internal", "progress": 71 }
+      ],
+      "kpis": [
+        { "label": "Forecast accuracy", "value": "96.4%" },
+        { "label": "Close cycle", "value": "4 days" },
+        { "label": "Budget variance", "value": "-1.8%" }
+      ],
+      "routine": ["Reconciling monthly revenue", "Updating the cash-flow forecast", "Monitoring budget variance", "Preparing management accounts"],
+      "appearance": { "suit": "#202838", "trousers": "#202838", "shirt": "#ffffff", "tie": "#7a1f2b", "skin": "#e8b896", "hair": "#4a4a4a", "hairStyle": "short", "height": 1.0, "build": 1.0 }
+    },
+    {
+      "id": "hr",
+      "name": "HN HR AI",
+      "role": "HR & Administration Manager",
+      "department": "hr",
+      "summary": "Human resources and administration.",
+      "jobDescription": "Runs onboarding, maintains employee records, drafts job descriptions and HR policies, and coordinates office administration. Decisions about people are always made by humans.",
+      "responsibilities": ["Onboarding coordination", "Employee records", "Policies and job descriptions", "Office administration"],
+      "keywords": ["hr", "hiring", "hire", "recruit", "recruitment", "onboarding", "employee", "staff", "training", "leave", "payroll", "job description", "admin", "administration", "people"],
+      "projects": [
+        { "name": "Consultant Onboarding Revamp", "client": "HN.CO internal", "progress": 57 },
+        { "name": "Learning & Development Plan", "client": "HN.CO internal", "progress": 26 }
+      ],
+      "kpis": [
+        { "label": "Onboarding completion", "value": "100%" },
+        { "label": "Time to hire", "value": "29 days" },
+        { "label": "Training hours / FTE", "value": "34" }
+      ],
+      "routine": ["Updating employee records", "Preparing an onboarding plan", "Drafting a job description", "Scheduling training sessions"],
+      "appearance": { "suit": "#4b5a6e", "trousers": "#2b3340", "shirt": "#f7f3ea", "tie": null, "skin": "#a8714f", "hair": "#2a1a12", "hairStyle": "long", "height": 0.96, "build": 0.95 }
+    },
+    {
+      "id": "legal",
+      "name": "HN Legal AI",
+      "role": "Legal Research & Compliance Analyst",
+      "department": "legal",
+      "summary": "Legal research and compliance.",
+      "jobDescription": "Researches regulation, supports contract review by flagging clauses and risks, maintains the compliance register and risk dashboard. Produces research for qualified counsel; it does not give legal advice.",
+      "responsibilities": ["Contract review support", "Regulatory research", "Compliance register", "Risk management dashboard"],
+      "keywords": ["legal", "contract", "nda", "agreement", "compliance", "gdpr", "regulation", "regulatory", "risk", "clause", "terms", "audit", "privacy", "liability"],
+      "projects": [
+        { "name": "Master Services Agreement Refresh", "client": "HN.CO internal", "progress": 62 },
+        { "name": "GDPR Compliance Review", "client": "Client — Healthcare", "progress": 40 }
+      ],
+      "kpis": [
+        { "label": "Contracts reviewed", "value": "37" },
+        { "label": "Open compliance actions", "value": "5" },
+        { "label": "Avg. review time", "value": "1.6 days" }
+      ],
+      "routine": ["Reviewing contract clauses", "Updating the compliance register", "Researching a regulatory change", "Assessing a risk entry"],
+      "appearance": { "suit": "#14181f", "trousers": "#14181f", "shirt": "#ffffff", "tie": "#101827", "skin": "#f2d6c2", "hair": "#8a8a8a", "hairStyle": "short", "height": 1.01, "build": 0.98 }
+    },
+    {
+      "id": "clientsuccess",
+      "name": "HN Client Success AI",
+      "role": "Client Success Manager",
+      "department": "clientsuccess",
+      "summary": "Customer relationship management.",
+      "jobDescription": "Looks after client relationships, monitors satisfaction and support queues, prepares account reviews and flags renewal or churn risks. Client communications are drafted for approval.",
+      "responsibilities": ["Account health monitoring", "Support queue management", "Quarterly business reviews", "Satisfaction and NPS tracking"],
+      "keywords": ["client", "customer", "satisfaction", "csat", "nps", "support", "ticket", "feedback", "renewal", "account review", "retention", "complaint", "relationship"],
+      "projects": [
+        { "name": "Quarterly Business Reviews", "client": "Top 10 clients", "progress": 50 },
+        { "name": "Client Health Scoring", "client": "HN.CO internal", "progress": 68 }
+      ],
+      "kpis": [
+        { "label": "CSAT", "value": "4.8/5" },
+        { "label": "NPS", "value": "+62" },
+        { "label": "Tickets open", "value": "12" }
+      ],
+      "routine": ["Reviewing the support queue", "Preparing a quarterly business review", "Updating client health scores", "Logging client feedback"],
+      "appearance": { "suit": "#5c6b80", "trousers": "#323b48", "shirt": "#ffffff", "tie": null, "skin": "#caa07f", "hair": "#1d1d1d", "hairStyle": "bun", "height": 0.97, "build": 0.94 }
+    }
+  ]
+}

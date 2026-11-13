@@ -212,11 +212,11 @@ function statusLine(c: Ctx, x: number, y: number, id: AgentId) {
   c.fillStyle = MUTED;
   c.font = `10px ${SANS}`;
   let label = st.taskLabel;
-  const room = TILE_W - 60 - w - (st.progress !== undefined ? 70 : 0);
+  const room = TILE_W - 60 - w - (st.progress != null ? 70 : 0);
   while (c.measureText(label).width > room && label.length > 4) label = label.slice(0, -2);
   if (label !== st.taskLabel) label += "…";
   c.fillText(`— ${label}`, x + 34 + w, yy + 12.5);
-  if (st.progress !== undefined) {
+  if (st.progress != null) {
     const bx = x + TILE_W - 80;
     c.fillStyle = "rgba(255,255,255,0.12)";
     c.fillRect(bx, yy + 6, 60, 6);

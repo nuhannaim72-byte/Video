@@ -1,4 +1,4 @@
-import raw from "../../../shared/catalog.json";
+import raw from "../data/catalog.json"; // synced from ../shared/catalog.json by scripts/sync-catalog.mjs
 import type { AgentId, DepartmentId } from "./types";
 
 export type HairStyle = "short" | "long" | "bun" | "curly" | "bald";
