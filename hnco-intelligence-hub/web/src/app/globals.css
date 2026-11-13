@@ -1,26 +1,165 @@
 @import "tailwindcss";
 
+@theme {
+  --color-navy: #101827;
+  --color-navy-900: #0a101c;
+  --color-navy-800: #141d2f;
+  --color-navy-700: #1b263b;
+  --color-slate: #52647d;
+  --color-gold: #c4a66a;
+  --color-gold-soft: #d8c39a;
+  --color-platinum: #f0f2f4;
+  --color-mist: #9aa6b8;
+  --color-status-working: #3fb27f;
+  --color-status-analysing: #4c8dff;
+  --color-status-waiting: #c4a66a;
+  --color-status-idle: #8b94a3;
+  --color-status-error: #e5484d;
+  --font-sans: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html,
+body {
+  background: var(--color-navy);
+  color: var(--color-platinum);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+::selection {
+  background: rgb(196 166 106 / 0.35);
+}
+
+/* Glass panels used across the headquarters interface */
+.panel {
+  background: linear-gradient(180deg, rgb(20 29 47 / 0.88), rgb(12 18 30 / 0.92));
+  border: 1px solid rgb(240 242 244 / 0.08);
+  box-shadow:
+    0 20px 50px -20px rgb(0 0 0 / 0.7),
+    inset 0 1px 0 rgb(255 255 255 / 0.04);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+}
+
+.hairline {
+  border-color: rgb(240 242 244 / 0.08);
+}
+
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(240 242 244 / 0.16) transparent;
+}
+
+/* Name tags floating above employees in the 3D view */
+.agent-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  padding: 3px 9px 3px 7px;
+  border-radius: 999px;
+  font: 500 11px/1.2 var(--font-inter), system-ui, sans-serif;
+  letter-spacing: 0.01em;
+  color: #f0f2f4;
+  background: rgb(16 24 39 / 0.82);
+  border: 1px solid rgb(240 242 244 / 0.12);
+  box-shadow: 0 6px 18px -8px rgb(0 0 0 / 0.8);
+  user-select: none;
+}
+.agent-tag.is-selected {
+  border-color: #c4a66a;
+  box-shadow: 0 0 0 1px rgb(196 166 106 / 0.4), 0 6px 18px -8px rgb(0 0 0 / 0.8);
+}
+.agent-tag__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  box-shadow: 0 0 8px currentColor;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+.pulse-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-dot {
+    animation: none;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Markdown-ish report bodies */
+.report h2 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: #f0f2f4;
+  margin: 0.2rem 0 0.4rem;
+}
+.report h3 {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c4a66a;
+  margin: 1rem 0 0.4rem;
+}
+.report p,
+.report li {
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: #cfd5de;
+}
+.report ul,
+.report ol {
+  padding-left: 1.1rem;
+  margin: 0.3rem 0;
+}
+.report ul {
+  list-style: disc;
+}
+.report ol {
+  list-style: decimal;
+}
+.report blockquote {
+  border-left: 2px solid #c4a66a;
+  padding: 0.4rem 0.7rem;
+  margin: 0.6rem 0;
+  background: rgb(196 166 106 / 0.08);
+  font-size: 0.8rem;
+  color: #d8c39a;
+}
+.report table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0;
+  font-size: 0.8rem;
+}
+.report th,
+.report td {
+  border-bottom: 1px solid rgb(240 242 244 / 0.08);
+  padding: 0.35rem 0.4rem;
+  text-align: left;
+  color: #cfd5de;
+}
+.report th {
+  color: #9aa6b8;
+  font-weight: 500;
+}
+.report strong {
+  color: #f0f2f4;
 }
