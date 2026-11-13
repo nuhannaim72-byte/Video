@@ -192,9 +192,9 @@ function buildBay(id: DepartmentId | "cafe", cx: number, side: 1 | -1) {
   place({ type: "desk", x: deskB[0], z: deskB[1], yaw: frontYaw, w: 1.6, d: 0.8, monitors: 1, tile });
   place({ type: "workstation", x: ws[0], z: ws[1], yaw: frontYaw, w: 2.0, d: 0.8, monitors: 3, tile });
 
-  const seatA = W(-1.3, 6.45);
-  const seatB = W(1.3, 6.45);
-  const seatW = W(-1.6, 10.45);
+  const seatA = W(-1.3, 6.6);
+  const seatB = W(1.3, 6.6);
+  const seatW = W(-1.6, 10.6);
   place({ type: "chair", x: seatA[0], z: seatA[1], yaw: backYaw }, false);
   place({ type: "chair", x: seatB[0], z: seatB[1], yaw: backYaw }, false);
   place({ type: "chair", x: seatW[0], z: seatW[1], yaw: backYaw }, false);
@@ -205,7 +205,7 @@ function buildBay(id: DepartmentId | "cafe", cx: number, side: 1 | -1) {
   // Project management also gets a physical Kanban board.
   if (id === "project") {
     const kb = W(3.55, 9.2);
-    place({ type: "kanbanBoard", x: kb[0], z: kb[1], yaw: side === 1 ? -Math.PI / 2 : -Math.PI / 2, w: 0.2, d: 2.4 });
+    place({ type: "kanbanBoard", x: kb[0], z: kb[1], yaw: -Math.PI / 2, w: 2.4, d: 0.2 });
   } else {
     const cr = W(3.62, 8.6);
     place({ type: "credenza", x: cr[0], z: cr[1], yaw: -Math.PI / 2, w: 2.4, d: 0.45 });
@@ -356,7 +356,7 @@ function buildReception() {
   // Entrance glass doors in the south facade; logo wall faces the arriving visitor.
   place({ type: "logoWall", x: -30, z: -17.2, yaw: 0, w: 9, d: 0.35 });
   place({ type: "receptionDesk", x: -30, z: -11.6, yaw: 0, w: 4.4, d: 0.9 });
-  place({ type: "execChair", x: -30, z: -12.8, yaw: 0 }, false);
+  place({ type: "execChair", x: -30, z: -13.0, yaw: 0 }, false);
   place({ type: "rug", x: -30, z: 5, yaw: 0, w: 6.2, d: 4.2 }, false);
   place({ type: "sofa", x: -33.1, z: 5, yaw: Math.PI / 2, w: 2.4, d: 0.95 });
   place({ type: "sofa", x: -26.9, z: 5, yaw: -Math.PI / 2, w: 2.4, d: 0.95 });
@@ -371,7 +371,7 @@ function buildReception() {
   addSpot({
     key: "reception:concierge",
     x: -30,
-    z: -12.75,
+    z: -12.3,
     yaw: 0,
     pose: "stand",
     approach: [[-24.5, 0], [-33, -9.5], [-33, -12.9]],
@@ -427,7 +427,7 @@ function buildExecutive() {
   place({ type: "execChair", x: 32.75, z: -11, yaw: -Math.PI / 2 }, false);
   place({ type: "armchair", x: 29.9, z: -11.75, yaw: Math.PI / 2, w: 0.85, d: 0.85 });
   place({ type: "armchair", x: 29.9, z: -10.25, yaw: Math.PI / 2, w: 0.85, d: 0.85 });
-  place({ type: "mediaWall", x: 30.5, z: -17.3, yaw: 0, w: 6.2, d: 0.3, tile: TILE.execMediaWall });
+  place({ type: "mediaWall", x: 30.5, z: -17.3, yaw: 0, w: 5.2, d: 0.3, tile: TILE.execMediaWall });
   place({ type: "sofa", x: 34.6, z: -5.2, yaw: -Math.PI / 2, w: 2.4, d: 0.95 });
   place({ type: "coffeeTable", x: 33.2, z: -5.2, yaw: 0, w: 0.9, d: 1.3 });
   place({ type: "plant", x: 35.3, z: -17.2, yaw: 0, w: 0.6, d: 0.6 });
@@ -435,11 +435,11 @@ function buildExecutive() {
 
   // Executive AI's desk near the door, facing the performance wall.
   place({ type: "desk", x: 27.0, z: -7.3, yaw: 0, w: 1.8, d: 0.85, monitors: 2, tile: TILE.executive });
-  place({ type: "chair", x: 27.0, z: -6.35, yaw: Math.PI }, false);
+  place({ type: "chair", x: 27.0, z: -6.5, yaw: Math.PI }, false);
   addSpot({
     key: "executive:desk",
     x: 27.0,
-    z: -6.35,
+    z: -6.5,
     yaw: Math.PI,
     pose: "sit",
     approach: [[26.4, 0], [26.4, -3.2], [27.0, -5.2]],
@@ -505,7 +505,7 @@ function buildExecutive() {
   const roomApproach: Vec2[] = [[26.4, 0], [26.4, 3.4]];
   let i = 0;
   for (const z of seatZ) {
-    for (const x of [28.95, 32.05]) {
+    for (const x of [29.2, 31.8]) {
       const yaw = x < 30.5 ? Math.PI / 2 : -Math.PI / 2;
       const aisle = x < 30.5 ? 28.1 : 33.0;
       place({ type: "chair", x, z, yaw }, false);
@@ -523,11 +523,11 @@ function buildExecutive() {
       i++;
     }
   }
-  place({ type: "chair", x: 30.5, z: 14.3, yaw: Math.PI }, false);
+  place({ type: "chair", x: 30.5, z: 13.95, yaw: Math.PI }, false);
   addSpot({
     key: `boardroom:seat:${i}`,
     x: 30.5,
-    z: 14.3,
+    z: 13.95,
     yaw: Math.PI,
     pose: "sit",
     approach: [...roomApproach, [28.1, 5.2], [28.1, 15.2], [30.5, 15.2]],
