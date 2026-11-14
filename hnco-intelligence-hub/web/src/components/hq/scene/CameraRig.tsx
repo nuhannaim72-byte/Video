@@ -299,13 +299,21 @@ export function CameraRig() {
       const kf = (keys.has("KeyW") || keys.has("ArrowUp") ? 1 : 0) - (keys.has("KeyS") || keys.has("ArrowDown") ? 1 : 0) + moveInput.forward;
       const kr = (keys.has("KeyD") || keys.has("ArrowRight") ? 1 : 0) - (keys.has("KeyA") || keys.has("ArrowLeft") ? 1 : 0) + moveInput.right;
       const run = keys.has("ShiftLeft") || keys.has("ShiftRight") || moveInput.run;
-      const speed = (run ? 5.5 : 2.6) * dt;
+      // Walk in real time even at low frame rates, in sub-steps short enough that a slow
+      // frame can never carry the visitor through a glass partition.
+      const distance = (run ? 5.5 : 2.6) * Math.min(rawDt, 0.25);
       const heading = mode === "first" ? v.yaw : v.camYaw;
       const fx = Math.sin(heading);
       const fz = Math.cos(heading);
-      let nx = visitor.current.x + (fx * kf - fz * kr) * speed;
-      let nz = visitor.current.z + (fz * kf + fx * kr) * speed;
-      [nx, nz] = collide(nx, nz);
+      const len = Math.hypot(kf, kr) || 1;
+      const dirX = (fx * kf - fz * kr) / Math.max(1, len);
+      const dirZ = (fz * kf + fx * kr) / Math.max(1, len);
+      const steps = Math.max(1, Math.ceil(distance / 0.2));
+      let nx = visitor.current.x;
+      let nz = visitor.current.z;
+      for (let i = 0; i < steps; i++) {
+        [nx, nz] = collide(nx + (dirX * distance) / steps, nz + (dirZ * distance) / steps);
+      }
       const moving = Math.hypot(nx - visitor.current.x, nz - visitor.current.z) > 1e-4;
       if (moving && mode === "third") {
         const want = Math.atan2(nx - visitor.current.x, nz - visitor.current.z);
