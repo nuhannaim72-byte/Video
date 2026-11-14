@@ -19,7 +19,7 @@ export function AgentPanel() {
   if (!selected) return null;
   return (
     <aside
-      className="panel pointer-events-auto absolute inset-x-2 bottom-2 top-[38vh] z-30 flex flex-col overflow-hidden rounded-xl md:inset-x-auto md:bottom-3 md:right-3 md:top-[76px] md:w-[420px]"
+      className="panel pointer-events-auto absolute inset-x-2 bottom-[70px] top-[34vh] z-30 flex flex-col overflow-hidden rounded-xl md:inset-x-auto md:bottom-3 md:right-3 md:top-[76px] md:w-[420px]"
       aria-label="Employee details"
     >
       {selected === "concierge" ? <ConciergeBody /> : <AgentBody id={selected} key={selected} />}

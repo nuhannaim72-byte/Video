@@ -75,11 +75,16 @@ type Fly = { from: THREE.Vector3; to: THREE.Vector3; fromT: THREE.Vector3; toT: 
 function overviewPose(aspect: number) {
   const vfov = THREE.MathUtils.degToRad(42);
   const hfov = 2 * Math.atan(Math.tan(vfov / 2) * aspect);
-  const dist = Math.max(40 / Math.tan(hfov / 2), 30 / Math.tan(vfov / 2)) * 0.95;
   const elev = THREE.MathUtils.degToRad(52);
+  // Portrait screens (phones): look along the building so its long side runs up the screen.
+  const portrait = aspect < 0.9;
+  const across = portrait ? 21 : 40; // half-width of the building as seen across the screen
+  const deep = portrait ? 40 : 30;
+  const dist = Math.max(across / Math.tan(hfov / 2), deep / Math.tan(vfov / 2)) * 0.95;
+  const back = Math.cos(elev) * dist;
   return {
-    position: new THREE.Vector3(0, Math.sin(elev) * dist, Math.cos(elev) * dist + 2),
-    target: new THREE.Vector3(0, 0, 2),
+    position: portrait ? new THREE.Vector3(back + 2, Math.sin(elev) * dist, 0) : new THREE.Vector3(0, Math.sin(elev) * dist, back + 2),
+    target: portrait ? new THREE.Vector3(2, 0, 0) : new THREE.Vector3(0, 0, 2),
   };
 }
 
