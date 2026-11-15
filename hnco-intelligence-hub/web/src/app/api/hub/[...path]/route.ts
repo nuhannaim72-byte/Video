@@ -16,7 +16,10 @@ async function proxy(req: NextRequest, ctx: RouteContext<"/api/hub/[...path]">) 
   const { path } = await ctx.params;
   const joined = path.join("/");
   if (!API) {
-    return Response.json({ configured: false, error: "HNCO_API_URL is not set — running without a backend." }, { status: 503 });
+    // No backend configured. The health probe gets a quiet answer (the office then runs its
+    // in-browser simulation); anything else is an error.
+    if (joined === "health") return Response.json({ status: "unconfigured" });
+    return Response.json({ error: "HNCO_API_URL is not set — running without a backend." }, { status: 503 });
   }
   if (!ALLOWED.test(joined)) return new Response("Not found", { status: 404 });
 
