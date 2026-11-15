@@ -10,8 +10,6 @@ backend with a central AI orchestrator. Start there:
 cd hnco-intelligence-hub/web && npm install && npm run dev    # http://localhost:3000
 ```
 
-It was built with the 3D Web Pack agents and skills described below.
-
 ## 3D Web Pack
 
 This repo includes the [3D Web Pack](https://github.com/skinnye/3d-web-pack) (MIT, © skinnye):
