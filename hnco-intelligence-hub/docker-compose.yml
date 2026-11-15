@@ -1,0 +1,38 @@
+# Local full stack: PostgreSQL + pgvector, the FastAPI backend and the web app.
+#   cp api/.env.example api/.env   # add OPENAI_API_KEY for live agents (optional)
+#   docker compose up --build      # http://localhost:3000
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: hnco
+      POSTGRES_PASSWORD: hnco-local-only
+      POSTGRES_DB: hnco
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hnco"]
+      interval: 5s
+      retries: 10
+
+  api:
+    build: { context: ., dockerfile: api/Dockerfile }
+    env_file: [{ path: api/.env, required: false }]
+    environment:
+      # Local development only: no sign-in. Use AUTH_MODE=entra in any shared environment.
+      ENVIRONMENT: development
+      AUTH_MODE: dev
+      DATABASE_URL: postgresql+asyncpg://hnco:hnco-local-only@db:5432/hnco
+      CORS_ORIGINS: '["http://localhost:3000"]'
+    depends_on:
+      db: { condition: service_healthy }
+    ports: ["8000:8000"]
+
+  web:
+    build: { context: ., dockerfile: web/Dockerfile }
+    environment:
+      HNCO_API_URL: http://api:8000
+    depends_on: [api]
+    ports: ["3000:3000"]
+
+volumes:
+  pgdata:
