@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { getAccessToken } from "@/lib/auth";
+import { entraEnabled, getAccessToken, getAccount } from "@/lib/auth";
 import { BackendClient, probeBackend, setActiveClient, type HubClient } from "@/lib/client";
 import { LocalSimulator } from "@/lib/sim/simulator";
 import { useHub } from "@/lib/store";
@@ -25,7 +25,21 @@ export function useHubConnection() {
       set({ connection: forceSim ? "local" : "connecting" });
       const health = forceSim ? null : await probeBackend();
       if (cancelled) return;
-      if (health) {
+      if (health && health.auth === "entra") {
+        if (!entraEnabled) {
+          // Nothing to sign in with: say so and show the labelled local simulation instead.
+          set({ connectionError: "The HN.CO backend requires Microsoft Entra ID sign-in, but this site has no Entra ID settings." });
+        } else {
+          const account = await getAccount().catch(() => null);
+          if (cancelled) return;
+          if (!account) {
+            set({ connection: "connecting", signInRequired: true });
+            return;
+          }
+          set({ userName: account.name ?? account.username });
+        }
+      }
+      if (health && !(health.auth === "entra" && !entraEnabled)) {
         set({ execution: health.execution, backendUrl: "/api/hub" });
         client = new BackendClient(
           apply,

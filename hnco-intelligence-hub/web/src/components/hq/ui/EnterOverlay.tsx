@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
+import { signIn } from "@/lib/auth";
 import { company } from "@/lib/catalog";
 import { useHub } from "@/lib/store";
 import { Wordmark } from "./primitives";
@@ -9,6 +10,8 @@ import { Wordmark } from "./primitives";
 export function EnterOverlay() {
   const entered = useHub((s) => s.entered);
   const connection = useHub((s) => s.connection);
+  const signInRequired = useHub((s) => s.signInRequired);
+  const connectionError = useHub((s) => s.connectionError);
   const set = useHub((s) => s.set);
   if (entered) return null;
   return (
@@ -27,16 +30,31 @@ export function EnterOverlay() {
           Director. Step inside, watch them work, and put them to work.
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-3">
-          <button
-            onClick={() => set({ entered: true })}
-            className="group inline-flex items-center gap-2 rounded-lg bg-gold px-6 py-3 text-[14px] font-semibold text-navy shadow-[0_12px_40px_-12px_rgba(196,166,106,0.8)] transition hover:bg-gold-soft"
-            autoFocus
-          >
-            Enter the headquarters
-            <ArrowRight size={17} className="transition group-hover:translate-x-0.5" />
-          </button>
+          {signInRequired ? (
+            <button
+              onClick={() => void signIn()}
+              className="group inline-flex items-center gap-2 rounded-lg bg-gold px-6 py-3 text-[14px] font-semibold text-navy shadow-[0_12px_40px_-12px_rgba(196,166,106,0.8)] transition hover:bg-gold-soft"
+              autoFocus
+            >
+              Sign in with Microsoft
+              <ArrowRight size={17} className="transition group-hover:translate-x-0.5" />
+            </button>
+          ) : (
+            <button
+              onClick={() => set({ entered: true })}
+              className="group inline-flex items-center gap-2 rounded-lg bg-gold px-6 py-3 text-[14px] font-semibold text-navy shadow-[0_12px_40px_-12px_rgba(196,166,106,0.8)] transition hover:bg-gold-soft"
+              autoFocus
+            >
+              Enter the headquarters
+              <ArrowRight size={17} className="transition group-hover:translate-x-0.5" />
+            </button>
+          )}
           <span className="text-[12px] text-mist">
-            {connection === "connected"
+            {signInRequired
+              ? "Sign in with your HN.CO account to enter"
+              : connectionError && connection === "local"
+                ? `${connectionError} Showing the local simulation.`
+                : connection === "connected"
               ? "Connected to the HN.CO backend"
               : connection === "connecting"
                 ? "Looking for the HN.CO backend…"

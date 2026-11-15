@@ -35,6 +35,9 @@ export type HubState = {
   execution: Execution;
   backendUrl: string | null;
   connectionError: string | null;
+  /** The backend needs a Microsoft Entra ID sign-in before it will talk to us. */
+  signInRequired: boolean;
+  userName: string | null;
 
   // --- Interface ---
   selected: Selection;
@@ -77,6 +80,8 @@ export const useHub = create<HubState>((set, get) => ({
   execution: "simulated",
   backendUrl: null,
   connectionError: null,
+  signInRequired: false,
+  userName: null,
 
   selected: null,
   hovered: null,

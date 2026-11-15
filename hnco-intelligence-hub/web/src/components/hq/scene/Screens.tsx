@@ -1,9 +1,11 @@
 "use client";
 
-import { useFrame } from "@react-three/fiber";
+import { useFrame, type ThreeEvent } from "@react-three/fiber";
 import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
-import { CORRIDOR_HALF, floorplan, NORTH_ROW, SOUTH_ROW } from "@/lib/floorplan";
+import { CORRIDOR_HALF, floorplan, NORTH_ROW, SOUTH_ROW, TILE } from "@/lib/floorplan";
+import { useHub } from "@/lib/store";
+import type { AgentId } from "@/lib/types";
 import { ATLAS_H, ATLAS_W, COLS, paintAtlas, paintSigns, SIGN_ORDER, SIGN_TILE_H, SIGN_TILE_W, TILE_H, TILE_W } from "./screenPainter";
 
 /** Build one merged geometry of quads, each mapped to a tile of an atlas. */
@@ -41,6 +43,21 @@ function quads(
 }
 
 const INSET = 4; // px, keeps mip-map bleed from neighbouring tiles out of view
+
+const TILE_OWNER = Object.fromEntries(Object.entries(TILE).map(([name, i]) => [i, name])) as Record<number, keyof typeof TILE>;
+
+/** Clicking a display opens whoever (or wherever) it belongs to. */
+function openScreen(e: ThreeEvent<MouseEvent>) {
+  if (e.faceIndex == null) return;
+  const screen = floorplan.screens[Math.floor(e.faceIndex / 2)];
+  if (!screen) return;
+  e.stopPropagation();
+  const owner = TILE_OWNER[screen.tile];
+  const hub = useHub.getState();
+  if (owner === "boardroom" || owner === "cafe") hub.flyToZone(owner);
+  else if (owner === "reception") hub.select("concierge");
+  else hub.select((owner === "execMediaWall" ? "executive" : owner) as AgentId);
+}
 
 export function Screens() {
   const { texture, canvas } = useMemo(() => {
@@ -89,7 +106,17 @@ export function Screens() {
   }, [texture, geometry]);
 
   return (
-    <mesh geometry={geometry} raycast={() => null}>
+    <mesh
+      geometry={geometry}
+      onClick={openScreen}
+      onPointerOver={(e) => {
+        e.stopPropagation();
+        document.body.style.cursor = "pointer";
+      }}
+      onPointerOut={() => {
+        document.body.style.cursor = "";
+      }}
+    >
       <meshBasicMaterial map={texture} toneMapped={false} color="#e6e9ee" />
     </mesh>
   );

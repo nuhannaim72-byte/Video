@@ -3,6 +3,7 @@
 import { Bell, LayoutDashboard, Settings2, Tag } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { signOut } from "@/lib/auth";
 import { selectPendingApprovals, useHub, type Quality } from "@/lib/store";
 import { cx, ExecutionTag, Wordmark } from "./primitives";
 
@@ -97,6 +98,7 @@ function SettingsMenu({ onClose }: { onClose: () => void }) {
   const speed = useHub((s) => s.simSpeed);
   const connection = useHub((s) => s.connection);
   const showLabels = useHub((s) => s.showLabels);
+  const userName = useHub((s) => s.userName);
   const set = useHub((s) => s.set);
   const opts: Quality[] = ["auto", "high", "balanced", "low"];
   return (
@@ -134,6 +136,14 @@ function SettingsMenu({ onClose }: { onClose: () => void }) {
         Name tags
         <input type="checkbox" checked={showLabels} onChange={(e) => set({ showLabels: e.target.checked })} className="accent-[#c4a66a]" />
       </label>
+      {userName && (
+        <div className="mt-2 flex items-center justify-between border-t border-white/[0.07] pt-2 text-[12px] text-mist">
+          <span className="truncate">Signed in as {userName}</span>
+          <button onClick={() => void signOut()} className="ml-2 shrink-0 text-gold hover:underline">
+            Sign out
+          </button>
+        </div>
+      )}
     </div>
   );
 }
