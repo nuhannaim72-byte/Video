@@ -77,6 +77,9 @@ export class LocalSimulator implements HubClient {
   private lastReal = 0;
   private nextMeeting = 60;
   private meetingEnds = 0;
+  /** A meeting's clock only starts once the presenter has reached the boardroom. */
+  private meetingStarted = false;
+  private meetingPresenter: AgentId | null = null;
   private meetingMembers: AgentId[] = [];
   private nextError = 150;
   private visitorHost = new Map<AgentId, AgentId>(); // host -> visitor
@@ -520,7 +523,9 @@ export class LocalSimulator implements HubClient {
     const topic = choice(MEETING_TOPICS);
     const seats = [...Array(BOARDROOM_SEATS).keys()].sort(() => Math.random() - 0.5);
     this.meetingMembers = members;
-    this.meetingEnds = this.simTime + rand(40, 55);
+    this.meetingPresenter = members[0];
+    this.meetingStarted = false;
+    this.meetingEnds = this.simTime + 150; // upper bound if people never arrive
     members.forEach((id, i) => {
       this.releaseSpots(id);
       this.mode.set(id, "meeting");
@@ -542,6 +547,8 @@ export class LocalSimulator implements HubClient {
   private leaveMeeting(id: AgentId) {
     this.meetingMembers = this.meetingMembers.filter((m) => m !== id);
     this.mode.set(id, "ambient");
+    // Without its presenter the meeting wraps up shortly.
+    if (id === this.meetingPresenter && !this.meetingStarted) this.meetingEnds = Math.min(this.meetingEnds, this.simTime + 20);
   }
 
   private maybeRaiseError() {
@@ -614,6 +621,16 @@ export class LocalSimulator implements HubClient {
     }
 
     // Meetings.
+    if (
+      this.meetingMembers.length &&
+      !this.meetingStarted &&
+      this.meetingPresenter &&
+      this.meetingMembers.includes(this.meetingPresenter) &&
+      isSettledAt(this.meetingPresenter, "boardroom:presenter")
+    ) {
+      this.meetingStarted = true;
+      this.meetingEnds = this.simTime + rand(40, 55);
+    }
     if (this.meetingMembers.length && this.simTime >= this.meetingEnds) {
       const members = this.meetingMembers;
       this.meetingMembers = [];

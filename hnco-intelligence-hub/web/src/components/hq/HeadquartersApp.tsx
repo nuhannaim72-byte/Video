@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { presence } from "@/lib/presence";
 import { useHub } from "@/lib/store";
 import { useHubConnection } from "./useHubConnection";
 import { HudOverlay } from "./ui/HudOverlay";
@@ -14,6 +15,7 @@ const OfficeScene = dynamic(() => import("./scene/OfficeScene"), {
 // Exposed in development so automated checks can drive the camera and read state.
 if (typeof window !== "undefined" && process.env.NODE_ENV !== "production") {
   (window as unknown as { __hub: typeof useHub }).__hub = useHub;
+  (window as unknown as { __presence: typeof presence }).__presence = presence;
 }
 
 export default function HeadquartersApp() {

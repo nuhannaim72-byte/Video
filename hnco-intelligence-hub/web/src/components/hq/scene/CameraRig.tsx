@@ -72,19 +72,21 @@ const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 
 
 type Fly = { from: THREE.Vector3; to: THREE.Vector3; fromT: THREE.Vector3; toT: THREE.Vector3; start: number; dur: number } | null;
 
-function overviewPose(aspect: number) {
+function overviewPose(aspect: number, width = 1280) {
   const vfov = THREE.MathUtils.degToRad(42);
   const hfov = 2 * Math.atan(Math.tan(vfov / 2) * aspect);
   const elev = THREE.MathUtils.degToRad(52);
   // Portrait screens (phones): look along the building so its long side runs up the screen.
   const portrait = aspect < 0.9;
-  const across = portrait ? 21 : 40; // half-width of the building as seen across the screen
+  // On desktop the departments panel covers the left edge: frame the building in the space beside it.
+  const shift = !portrait && width >= 768 ? -7 : 0;
+  const across = portrait ? 21 : 40 + Math.abs(shift) * 0.6; // half-width of the building as seen across the screen
   const deep = portrait ? 40 : 30;
   const dist = Math.max(across / Math.tan(hfov / 2), deep / Math.tan(vfov / 2)) * 0.95;
   const back = Math.cos(elev) * dist;
   return {
-    position: portrait ? new THREE.Vector3(back + 2, Math.sin(elev) * dist, 0) : new THREE.Vector3(0, Math.sin(elev) * dist, back + 2),
-    target: portrait ? new THREE.Vector3(2, 0, 0) : new THREE.Vector3(0, 0, 2),
+    position: portrait ? new THREE.Vector3(back + 2, Math.sin(elev) * dist, 0) : new THREE.Vector3(shift, Math.sin(elev) * dist, back + 2),
+    target: portrait ? new THREE.Vector3(2, 0, 0) : new THREE.Vector3(shift, 0, 2),
   };
 }
 
@@ -203,7 +205,7 @@ export function CameraRig() {
       }
     };
     rigCommands.overview = () => {
-      const p = overviewPose(size.width / size.height);
+      const p = overviewPose(size.width / size.height, size.width);
       startFly(p.position, p.target, 1.4);
     };
   });
@@ -217,7 +219,7 @@ export function CameraRig() {
   // Intro fly-in from outside the entrance.
   useEffect(() => {
     if (!persp.current || !controls.current) return;
-    const p = overviewPose(size.width / size.height);
+    const p = overviewPose(size.width / size.height, size.width);
     if (!entered) {
       persp.current.position.set(-30, 2.4, 38);
       controls.current.target.set(-30, 2.6, 10);
