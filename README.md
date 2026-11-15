@@ -1,5 +1,17 @@
 # Video
 
+## HN.CO Intelligence Hub — Virtual Headquarters
+
+[`hnco-intelligence-hub/`](hnco-intelligence-hub/README.md) is a 3D virtual corporate office for HN.CO:
+twelve AI employees across twelve departments, a Managing Director's control centre, and a FastAPI
+backend with a central AI orchestrator. Start there:
+
+```bash
+cd hnco-intelligence-hub/web && npm install && npm run dev    # http://localhost:3000
+```
+
+It was built with the 3D Web Pack agents and skills described below.
+
 ## 3D Web Pack
 
 This repo includes the [3D Web Pack](https://github.com/skinnye/3d-web-pack) (MIT, © skinnye):
